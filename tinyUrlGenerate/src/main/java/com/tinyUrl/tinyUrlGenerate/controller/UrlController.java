@@ -13,12 +13,11 @@ import java.io.IOException;
 
 @RestController
 @AllArgsConstructor
-@NoArgsConstructor
 @Data
 @RequestMapping("/api/urls")
 public class UrlController {
 
-    UrlShorteningService service;
+    private final UrlShorteningService service;
 
     @PostMapping()
     public ResponseEntity<String> shortUrl(@RequestParam String url){
