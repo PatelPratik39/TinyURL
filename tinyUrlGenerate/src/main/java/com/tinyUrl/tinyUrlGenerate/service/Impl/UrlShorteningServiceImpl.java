@@ -5,6 +5,7 @@ import com.tinyUrl.tinyUrlGenerate.repository.UrlMappingRepository;
 import com.tinyUrl.tinyUrlGenerate.service.UrlShorteningService;
 import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
@@ -20,7 +21,10 @@ import static org.apache.kafka.common.config.ConfigResource.Type.TOPIC;
 public class UrlShorteningServiceImpl implements UrlShorteningService {
 
     private final UrlMappingRepository repository;  //repository injection into Service Impl class
+    private final KafkaTemplate<String, String> kafkaTemplate;  // KafkaTemplate injection
 
+
+    private static final String TOPIC_NAME = "url-shortener-topic";  // Kafka topic name
 
     @Override
     @Cacheable(value = "urlCache", key = "#shortUrl")
@@ -91,7 +95,7 @@ public class UrlShorteningServiceImpl implements UrlShorteningService {
     private void publishToKafka ( String shortUrl, String originalUrl ) {
 
         String message = String.format("Shortend URL : %s -> %s", shortUrl,originalUrl);  //create a message to send
-        kafkaTemplate.send(TOPIC,message); // send the message to the specific kafka topic
+        kafkaTemplate.send(TOPIC_NAME,message); // send the message to the specific kafka topic
         System.out.println("Published message to Kafka : " + message);
     }
 }
