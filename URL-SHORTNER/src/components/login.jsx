@@ -69,7 +69,8 @@ const Login = () => {
                 placeholder="Enter Email"
                 onChange={handleInputChnge}
               />
-              <Error message={"some Error"} />
+
+              {error.email && <Error message={"some Error"} />}
             </div>
             <div className="space-y-1">
               <Input
@@ -78,7 +79,7 @@ const Login = () => {
                 placeholder="Enter Password"
                 onChange={handleInputChnge}
               />
-              <Error message={"Some Error"} />
+              {error.password && <Error message={"Some Error"} />}
             </div>
           </CardContent>
           <CardFooter>
