@@ -1,5 +1,5 @@
 # TinyURL
-    It's a Full Stack App to generate TinyUrl
+* It's a Full Stack App to generate TinyUrl
 
 #   Frontend:
 * React:
@@ -43,7 +43,8 @@
   * OAuth or JWT: Authentication/Authorization: If you plan to secure the API endpoints, OAuth or JWT can be used.
 
 # Monitoring & Logging:
-1. AWS CloudWatch:
+*   AWS CloudWatch:
+
     For monitoring application performance, logs, and setting up alerts.
     Log4j or SLF4J: Logging: For application-level logging within the Spring Boot app.
 
@@ -51,7 +52,6 @@
 Custom Analytics Service:
 Data Aggregation & Visualization: Optional service for tracking how many times URLs are accessed, which can be stored in a time-series database like AWS Timestream or visualized using AWS QuickSight or Grafana.
 Version Control:
-# Git:
-Version Control System: For managing the source code.
-GitHub or GitLab: For hosting the code repository.
-This tech stack will provide a comprehensive and scalable solution for building, deploying, and managing the URL Shortener App. Each component has been chosen to ensure the application is robust, scalable, and maintainable.
+
+This tech stack will provide a comprehensive and scalable solution for building, deploying, and managing the URL Shortener App. 
+Each component has been chosen to ensure the application is robust, scalable, and maintainable.
