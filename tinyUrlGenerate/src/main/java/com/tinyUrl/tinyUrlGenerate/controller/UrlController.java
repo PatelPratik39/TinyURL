@@ -2,8 +2,9 @@ package com.tinyUrl.tinyUrlGenerate.controller;
 
 import com.tinyUrl.tinyUrlGenerate.service.UrlShorteningService;
 import jakarta.servlet.http.HttpServletResponse;
+import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import org.antlr.v4.runtime.misc.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -13,7 +14,6 @@ import java.io.IOException;
 
 @RestController
 @AllArgsConstructor
-@Data
 @RequestMapping("/api/urls")
 @Validated
 public class UrlController {
@@ -27,9 +27,13 @@ public class UrlController {
     }
 
     @GetMapping("/{shortUrl}")
-    public ResponseEntity<Void> redirectToUrl( String shortUrl, HttpServletResponse response ) throws IOException {
+    public ResponseEntity<String> redirectToUrl(
+            @PathVariable @NotNull @Size(min=8, max=8) String shortUrl,
+            HttpServletResponse response) throws IOException {
+
         String originalUrl = service.getOriginalUrl(shortUrl);
         response.sendRedirect(originalUrl);
+//        return ResponseEntity.ok("URL retrieved Successfully!");
         return ResponseEntity.status(HttpStatus.FOUND).build();
     }
 
