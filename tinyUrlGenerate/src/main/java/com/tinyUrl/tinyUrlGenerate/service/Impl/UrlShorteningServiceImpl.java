@@ -1,6 +1,7 @@
 package com.tinyUrl.tinyUrlGenerate.service.Impl;
 
 import com.tinyUrl.tinyUrlGenerate.entity.UrlMapping;
+import com.tinyUrl.tinyUrlGenerate.exception.UrlNotFoundException;
 import com.tinyUrl.tinyUrlGenerate.repository.UrlMappingRepository;
 import com.tinyUrl.tinyUrlGenerate.service.UrlShorteningService;
 import lombok.AllArgsConstructor;
@@ -28,10 +29,10 @@ public class UrlShorteningServiceImpl implements UrlShorteningService {
 
     @Override
     @Cacheable(value = "urlCache", key = "#shortUrl")
-    public String getOriginalUrl ( String shortUrl ) {
+    public String getOriginalUrl(String shortUrl) {
         return repository.findByShortUrl(shortUrl)
-                .map(urlMapping ->  getOriginalUrl(shortUrl))
-                .orElseThrow(() -> new RuntimeException("URL Not Found!!"));
+                .map(UrlMapping::getOriginalUrl)
+                .orElseThrow(() -> new UrlNotFoundException("Short URL not found: " + shortUrl));
     }
 
     @Override

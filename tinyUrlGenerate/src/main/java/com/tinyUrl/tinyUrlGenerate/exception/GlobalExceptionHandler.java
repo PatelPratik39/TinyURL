@@ -14,8 +14,13 @@ import java.util.Map;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(UrlNotFoundException.class)
+    public ResponseEntity<String> handleUrlNotFoundException(UrlNotFoundException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity< Map <String,Object> > handleResourceNotFoundException( ResourceNotFoundException resourceNotFoundException, WebRequest request ){
+    public ResponseEntity<String> handleResourceNotFoundException( ResourceNotFoundException resourceNotFoundException, WebRequest request ){
         Map<String,Object> body = new HashMap <>();
 
         body.put("timeStamp" ,LocalDateTime.now());
@@ -24,7 +29,7 @@ public class GlobalExceptionHandler {
         body.put("message", resourceNotFoundException.getMessage());
         body.put("path", request.getDescription(false).substring(4));
 
-        return new ResponseEntity<>(body,HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(resourceNotFoundException.getMessage(),HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler( BadRequestException.class)

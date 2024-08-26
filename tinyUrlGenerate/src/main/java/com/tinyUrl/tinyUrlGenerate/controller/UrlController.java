@@ -4,9 +4,9 @@ import com.tinyUrl.tinyUrlGenerate.service.UrlShorteningService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -15,6 +15,7 @@ import java.io.IOException;
 @AllArgsConstructor
 @Data
 @RequestMapping("/api/urls")
+@Validated
 public class UrlController {
 
     private final UrlShorteningService service;
