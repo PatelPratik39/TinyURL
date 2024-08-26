@@ -13,6 +13,8 @@ import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.Optional;
 
+import static org.apache.kafka.common.config.ConfigResource.Type.TOPIC;
+
 @Service
 @AllArgsConstructor
 public class UrlShorteningServiceImpl implements UrlShorteningService {
@@ -87,5 +89,9 @@ public class UrlShorteningServiceImpl implements UrlShorteningService {
 
 //    share with Kafka
     private void publishToKafka ( String shortUrl, String originalUrl ) {
+
+        String message = String.format("Shortend URL : %s -> %s", shortUrl,originalUrl);  //create a message to send
+        kafkaTemplate.send(TOPIC,message); // send the message to the specific kafka topic
+        System.out.println("Published message to Kafka : " + message);
     }
 }
